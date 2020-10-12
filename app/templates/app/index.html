@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
-    {% if labels %}
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+{% if labels %}
     <ul>
     {% for label in labels %}
         <li>{{ label.name }}</li>
@@ -14,5 +11,5 @@
 {% else %}
     <p>No labels are available.</p>
 {% endif %}
-</body>
-</html>
+
+{% endblock %}
