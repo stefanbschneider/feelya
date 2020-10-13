@@ -10,5 +10,4 @@ app_name = 'app'
 
 urlpatterns = [
     path('', views.index, name='index'),
-    path('add/<label_name>/', views.add_label, name='add')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

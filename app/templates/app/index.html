@@ -1,14 +1,19 @@
 {% extends 'app/base.html' %}
 
 {% block content %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {#    text box to enter new labels #}
-    <form>
-        <div class="form-group">
-            <label for="labelInput">Add new label</label>
-            <input type="text" class="form-control" id="labelInput">
-            <small id="labelHelp" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>
-        </div>
+    <form action="" method="post">
+        {% csrf_token %}
+
+{#        <div class="form-group">#}
+{#            <label for="labelInput">Add new label</label>#}
+{#            <input type="text" class="form-control" id="labelInput">#}
+{#            <small id="labelHelp" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>#}
+{#        </div>#}
+
+        {{ form }}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
