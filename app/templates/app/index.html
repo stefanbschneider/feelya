@@ -2,6 +2,18 @@
 
 {% block content %}
 
+{#    text box to enter new labels #}
+    <form>
+        <div class="form-group">
+            <label for="labelInput">Add new label</label>
+            <input type="text" class="form-control" id="labelInput">
+            <small id="labelHelp" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+
+{# show previously tracked labels #}
 {% if labels %}
     <ul>
     {% for label in labels %}

@@ -1,6 +1,7 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
+from django.urls import reverse
 
 from .models import Label
 
@@ -12,4 +13,11 @@ def index(request):
     context = {
         'labels': labels,
     }
-    return HttpResponse(template.render(context, request))
+    return render(request, 'app/index.html', context)
+
+
+def add_label(request, label_name):
+    """Add a newly tracked label"""
+    label = Label.objects.create(name=label_name, owner=request.user)
+    return HttpResponseRedirect(reverse('app:index'))
+
