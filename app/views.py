@@ -15,8 +15,9 @@ def index(request):
         form = LabelForm(request.POST)
 
         if form.is_valid():
-            # process as needed
-            label = Label.objects.create(name=form.cleaned_data['label_name'], owner=request.user)
+            # get the label name and strip and convert to lower before saving it
+            label_name = form.cleaned_data['label_name'].strip().lower()
+            label = Label.objects.create(name=label_name, owner=request.user)
             return HttpResponseRedirect(reverse('app:index'))
 
     # if a GET (or any other method) we'll create a blank form
