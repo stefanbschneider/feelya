@@ -19,20 +19,15 @@
 
 
 {# show previously tracked entries #}
-<ul>
-    {% for date in dates %}
-        <li>{{ date.date }}</li>
-    {% endfor %}
-</ul>
-
-{% if entries %}
     <ul>
-    {% for entry in entries %}
-        <li>{{ entry.name }}</li>
+    {% for day, entries in entry_dict.items %}
+        <li>{{ day }}</li>
+        <ul>
+            {% for e in entries %}
+                <li>{{ e.name }}</li>
+            {% endfor %}
+        </ul>
     {% endfor %}
     </ul>
-{% else %}
-    <p>No entries are available.</p>
-{% endif %}
 
 {% endblock %}
