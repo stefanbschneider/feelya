@@ -49,13 +49,8 @@ def index(request):
 
 @login_required
 def evaluate(request):
-    # returns a QuerySet/list of dicts with 'name' and 'count'
-    entry_counts = Entry.objects.filter(owner=request.user).values('name').annotate(count=Count('name'))
-    # sort with decreasing frequency
-    counts_sorted = sorted(entry_counts, key=lambda e: e['count'], reverse=True)
-    count_strings = [f"{e['count']}x: {e['name']}" for e in counts_sorted]
+    """Eval view that shows how many times each entry was tracked"""
     context = {
-        'entry_counts': counts_sorted,
-        'count_strings': count_strings,
+        'entry_counts': most_frequent_entries(request.user)
     }
     return render(request, 'app/eval.html', context)

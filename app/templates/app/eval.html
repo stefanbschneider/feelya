@@ -4,8 +4,8 @@
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
     <ul>
-    {% for e in count_strings %}
-        <li>{{ e }}</li>
+    {% for name, count in entry_counts.items %}
+        <li>{{ count }}x: {{ name }}</li>
     {% endfor %}
     </ul>
 {% endblock %}
