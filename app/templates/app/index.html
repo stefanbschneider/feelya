@@ -4,7 +4,7 @@
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 {#    text box to enter new entries #}
-    <form action="" method="post">
+    <form action="" method="post" style="margin-bottom: 1cm;">
         {% csrf_token %}
 
         <div class="form-group">
@@ -17,17 +17,30 @@
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
+{# show top 10 most frequent entries #}
+    {% if entry_counts and entry_dict|length > 0 %}
+    <div class="card" style="margin-bottom: 1cm;">
+        <div class="card-body">
+            <div class="card-title">Suggested entries</div>
+            {% for name, count in entry_counts.items %}
+            <button type="button" class="btn btn-primary">{{ name }}</button>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
 
 {# show previously tracked entries #}
-    <ul>
-    {% for day, entries in entry_dict.items %}
-        <li>{{ day }}</li>
+    <div class="container-fluid">
         <ul>
-            {% for e in entries %}
-                <li>{{ e.name }}</li>
-            {% endfor %}
+        {% for day, entries in entry_dict.items %}
+            <li>{{ day }}</li>
+            <ul>
+                {% for e in entries %}
+                    <li>{{ e.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
         </ul>
-    {% endfor %}
-    </ul>
+    </div>
 
 {% endblock %}

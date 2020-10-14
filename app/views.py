@@ -7,20 +7,11 @@ from django.db.models import Count
 
 from .models import Entry
 from .forms import EntryForm
+from .util import most_frequent_entries
 
 
 @login_required
 def index(request):
-    entries = Entry.objects.filter(owner=request.user).order_by('-date', 'name')
-    # tracked_dates = Entry.objects.values('date').distinct()
-    # construct dict with date --> list of entries; ordered by default in Python 3.6+
-    entry_dict = dict()
-    for e in entries:
-        if e.date in entry_dict:
-            entry_dict[e.date].append(e)
-        else:
-            entry_dict[e.date] = [e]
-
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         form = EntryForm(request.POST)
@@ -30,16 +21,26 @@ def index(request):
             entry_name = form.cleaned_data['entry_name'].strip().lower()
             entry = Entry.objects.create(name=entry_name, owner=request.user)
             return HttpResponseRedirect(reverse('app:index'))
-
     # if a GET (or any other method) we'll create a blank form
     else:
         form = EntryForm()
 
+    # get relevant data
+    entries = Entry.objects.filter(owner=request.user).order_by('-date', 'name')
+    # construct dict with date --> list of entries; ordered by default in Python 3.6+
+    entry_dict = dict()
+    for e in entries:
+        if e.date in entry_dict:
+            entry_dict[e.date].append(e)
+        else:
+            entry_dict[e.date] = [e]
+
+    entry_counts = most_frequent_entries(request.user, number=30)
+
     # prepare context
     context = {
-        # 'entries': entries,
         'entry_dict': entry_dict,
-        # 'dates': tracked_dates,
+        'entry_counts': entry_counts,
         'form': form,
     }
 
