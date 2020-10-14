@@ -8,7 +8,8 @@ from .forms import EntryForm
 
 
 def index(request):
-    entries = Entry.objects.order_by('-date')
+    entries = Entry.objects.order_by('-date', 'name')
+    tracked_dates = Entry.objects.values('date').distinct()
 
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
@@ -27,7 +28,8 @@ def index(request):
     # prepare context
     context = {
         'entries': entries,
-        'form': form
+        'dates': tracked_dates,
+        'form': form,
     }
 
     return render(request, 'app/index.html', context)

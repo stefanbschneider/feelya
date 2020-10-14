@@ -19,6 +19,12 @@
 
 
 {# show previously tracked entries #}
+<ul>
+    {% for date in dates %}
+        <li>{{ date.date }}</li>
+    {% endfor %}
+</ul>
+
 {% if entries %}
     <ul>
     {% for entry in entries %}
