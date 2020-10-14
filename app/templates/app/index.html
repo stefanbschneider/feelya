@@ -7,13 +7,13 @@
     <form action="" method="post">
         {% csrf_token %}
 
-{#        <div class="form-group">#}
-{#            <label for="labelInput">Add new label</label>#}
-{#            <input type="text" class="form-control" id="labelInput">#}
-{#            <small id="labelHelp" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>#}
-{#        </div>#}
+        <div class="form-group">
+            {{ form.label_name.label_tag }}
+            <input type="text" class="form-control" id="{{ form.label_name.id_for_label }}" name="{{ form.label_name.html_name }}">
+            <small id="{{ form.label_name.id_for_label }}Help" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>
+            <div id="{{ form.label_name.id_for_label }}Feedback" class="invalid-feedback">{{ form.label_name.errors }}</div>
+        </div>
 
-        {{ form }}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
