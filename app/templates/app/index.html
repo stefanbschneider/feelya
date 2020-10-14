@@ -3,30 +3,30 @@
 {% block content %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-{#    text box to enter new labels #}
+{#    text box to enter new entries #}
     <form action="" method="post">
         {% csrf_token %}
 
         <div class="form-group">
-            {{ form.label_name.label_tag }}
-            <input type="text" class="form-control" id="{{ form.label_name.id_for_label }}" name="{{ form.label_name.html_name }}">
-            <small id="{{ form.label_name.id_for_label }}Help" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>
-            <div id="{{ form.label_name.id_for_label }}Feedback" class="invalid-feedback">{{ form.label_name.errors }}</div>
+            {{ form.entry_name.label_tag }}
+            <input type="text" class="form-control" id="{{ form.entry_name.id_for_label }}" name="{{ form.entry_name.html_name }}">
+            <small id="{{ form.entry_name.id_for_label }}Help" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>
+            <div id="{{ form.entry_name.id_for_label }}Feedback" class="invalid-feedback">{{ form.entry_name.errors }}</div>
         </div>
 
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 
-{# show previously tracked labels #}
-{% if labels %}
+{# show previously tracked entries #}
+{% if entries %}
     <ul>
-    {% for label in labels %}
-        <li>{{ label.name }}</li>
+    {% for entry in entries %}
+        <li>{{ entry.name }}</li>
     {% endfor %}
     </ul>
 {% else %}
-    <p>No labels are available.</p>
+    <p>No entries are available.</p>
 {% endif %}
 
 {% endblock %}
