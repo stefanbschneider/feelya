@@ -48,6 +48,15 @@ def index(request):
 
 
 @login_required
+def add_entry(request, entry_name):
+    # only works for post
+    if request.method == 'POST':
+        entry_name = entry_name.strip().lower()
+        entry = Entry.objects.create(name=entry_name, owner=request.user)
+    return HttpResponseRedirect(reverse('app:index'))
+
+
+@login_required
 def evaluate(request):
     """Eval view that shows how many times each entry was tracked"""
     context = {

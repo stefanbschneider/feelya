@@ -23,7 +23,10 @@
         <div class="card-body">
             <div class="card-title">Suggested entries</div>
             {% for name, count in entry_counts.items %}
-            <button type="button" class="btn btn-primary">{{ name }}</button>
+                <form method="post" action="{% url 'app:add' name %}" style="display: inline-block;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary" name="{{ name }}">{{ name }}</button>
+                </form>
             {% endfor %}
         </div>
     </div>
