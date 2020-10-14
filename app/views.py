@@ -2,13 +2,15 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 
 from .models import Entry
 from .forms import EntryForm
 
 
+@login_required
 def index(request):
-    entries = Entry.objects.order_by('-date', 'name')
+    entries = Entry.objects.filter(owner=request.user).order_by('-date', 'name')
     tracked_dates = Entry.objects.values('date').distinct()
 
     # if this is a POST request we need to process the form data
