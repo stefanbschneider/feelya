@@ -1,29 +1,12 @@
-import datetime
-
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.template import loader
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.db.models import Count
 
 from .models import Entry
 from .forms import EntryForm
-
-
-def order_entries(entries, last_days=7):
-    """
-    Order the given entries by date and return a dict that has a key for the last last_days days.
-    Each key points to a (possibly empty) list of entries of that day
-    """
-    today = datetime.date.today()
-    days = [today - datetime.timedelta(days=i) for i in range(last_days)]
-    # construct dict with empty list for each day
-    entry_dict = {day: [] for day in days}
-    # fill it by iterating over the list of given entries
-    for e in entries:
-        if e.date in entry_dict:
-            entry_dict[e.date].append(e)
-    return entry_dict
 
 
 @login_required
@@ -61,3 +44,17 @@ def index(request):
     }
 
     return render(request, 'app/index.html', context)
+
+
+@login_required
+def evaluate(request):
+    # returns a QuerySet/list of dicts with 'name' and 'count'
+    entry_counts = Entry.objects.filter(owner=request.user).values('name').annotate(count=Count('name'))
+    # sort with decreasing frequency
+    counts_sorted = sorted(entry_counts, key=lambda e: e['count'], reverse=True)
+    count_strings = [f"{e['count']}x: {e['name']}" for e in counts_sorted]
+    context = {
+        'entry_counts': counts_sorted,
+        'count_strings': count_strings,
+    }
+    return render(request, 'app/eval.html', context)

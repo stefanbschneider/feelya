@@ -1,0 +1,11 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <ul>
+    {% for e in count_strings %}
+        <li>{{ e }}</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -10,4 +10,5 @@ app_name = 'app'
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('evaluate/', views.evaluate, name='evaluate')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
