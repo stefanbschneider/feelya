@@ -163,8 +163,6 @@ PWA_APP_START_URL = '/'
 # PWA_APP_STATUS_BAR_COLOR = 'default'
 PWA_APP_ICONS = [
     {
-        # 'src': '/static/images/my_app_icon.png',
-        # 'sizes': '160x160'
         "src": "/static/android-chrome-192x192.png",
         "sizes": "192x192",
         "type": "image/png"
@@ -177,21 +175,19 @@ PWA_APP_ICONS = [
 ]
 PWA_APP_ICONS_APPLE = [
     {
-        # 'src': '/static/images/my_apple_icon.png',
-        # 'sizes': '160x160',
-        'src': 'apple-touch-icon.png',
-        'sizes': '180x180'
+        'src': '/static/apple-touch-icon.png',
+        'sizes': '180x180',
+        "type": "image/png"
     }
 ]
 PWA_APP_SPLASH_SCREEN = [
     {
-        # 'src': '/static/images/icons/splash-640x1136.png',
-        # 'media': '(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)'
-        "src": "android-chrome-512x512.png",
+        "src": "/static/android-chrome-512x512.png",
         "sizes": "512x512",
         "type": "image/png"
     }
 ]
 # PWA_APP_DIR = 'ltr'
 PWA_APP_LANG = 'en-US'
-
+# custom service worker
+PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'app', 'serviceworker.js')
