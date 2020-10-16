@@ -33,17 +33,24 @@
     {% endif %}
 
 {# show previously tracked entries #}
-    <div class="container-fluid">
-        <ul>
-        {% for day, entries in entry_dict.items %}
-            <li>{{ day }}</li>
-            <ul>
+    {% for day, entries in entry_dict.items %}
+        <div class="card" style="margin-bottom: 0.5cm;">
+            <div class="card-body">
+                <div class="card-title">{{ day }}</div>
                 {% for e in entries %}
-                    <li>{{ e.name }}</li>
+{#                    each entry is an input group with buttons, eg, for deleting the entry #}
+                    <form method="post" action="{% url 'app:delete' e.pk %}">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="{{ e.name }}" aria-label="{{ e.name }}" disabled>
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="submit" name="{{ e.pk }}">Delete</button>
+                            </div>
+                        </div>
+                    </form>
                 {% endfor %}
-            </ul>
-        {% endfor %}
-        </ul>
-    </div>
+            </div>
+        </div>
+    {% endfor %}
 
 {% endblock %}

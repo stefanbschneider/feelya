@@ -1,5 +1,7 @@
+import logging
+
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.template import loader
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
@@ -8,6 +10,9 @@ from django.db.models import Count
 from .models import Entry
 from .forms import EntryForm
 from .util import most_frequent_entries
+
+
+logger = logging.getLogger(__name__)
 
 
 @login_required
@@ -53,6 +58,16 @@ def add_entry(request, entry_name):
     if request.method == 'POST':
         entry_name = entry_name.strip().lower()
         entry = Entry.objects.create(name=entry_name, owner=request.user)
+    return HttpResponseRedirect(reverse('app:index'))
+
+
+@login_required
+def delete_entry(request, pk):
+    if request.method == 'POST':
+        entry = get_object_or_404(Entry, pk=pk, owner=request.user)
+        entry.delete()
+    else:
+        logger.warning(f'delete_query only supports POST requests, got {request.method}')
     return HttpResponseRedirect(reverse('app:index'))
 
 
