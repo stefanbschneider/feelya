@@ -25,7 +25,7 @@
             {% for name, count in entry_counts.items %}
                 <form method="post" action="{% url 'app:add' name %}" style="display: inline-block;">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-primary" name="{{ name }}">{{ name }}</button>
+                    <button type="submit" class="btn btn-secondary" name="{{ name }}" style="margin-bottom: 5px;">{{ name }}</button>
                 </form>
             {% endfor %}
         </div>
