@@ -3,22 +3,19 @@
 {% block content %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-{#    text box to enter new entries #}
+{#    text and date field to add new entries #}
     <form action="" method="post" style="margin-bottom: 1cm;">
         {% csrf_token %}
 
         <div class="form-group">
             {{ form.entry_name.label_tag }}
-            <input type="text" class="form-control" id="{{ form.entry_name.id_for_label }}" name="{{ form.entry_name.html_name }}">
+            <div class="input-group">
+                <input type="text" class="form-control" id="{{ form.entry_name.id_for_label }}" name="{{ form.entry_name.html_name }}">
+                {{ form.entry_date }}
+            </div>
+
             <small id="{{ form.entry_name.id_for_label }}Help" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>
             <div id="{{ form.entry_name.id_for_label }}Feedback" class="invalid-feedback">{{ form.entry_name.errors }}</div>
-        </div>
-
-        <div class="form-group">
-            {{ form.entry_date.label_tag }}
-            {{ form.entry_date }}
-{#            <input type="text" class="form-control" id="{{ form.entry_name.id_for_label }}" name="{{ form.entry_name.html_name }}">#}
-{#            <small id="{{ form.entry_name.id_for_label }}Help" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>#}
             <div id="{{ form.entry_date.id_for_label }}Feedback" class="invalid-feedback">{{ form.entry_date.errors }}</div>
         </div>
 
