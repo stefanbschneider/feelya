@@ -10,8 +10,12 @@
         <div class="form-group">
             {{ form.entry_name.label_tag }}
             <div class="input-group">
-                <input type="text" class="form-control" id="{{ form.entry_name.id_for_label }}" name="{{ form.entry_name.html_name }}">
+                <input type="text" class="form-control" id="{{ form.entry_name.id_for_label }}" name="{{ form.entry_name.html_name }}" aria-label="new entry field">
                 {{ form.entry_date }}
+
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
             </div>
 
             <small id="{{ form.entry_name.id_for_label }}Help" class="form-text text-muted">This can be anything you want to track: An activity, food, how you slept, stress level, etc.</small>
@@ -19,7 +23,7 @@
             <div id="{{ form.entry_date.id_for_label }}Feedback" class="invalid-feedback">{{ form.entry_date.errors }}</div>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
+{#        <button type="submit" class="btn btn-primary">Submit</button>#}
     </form>
 
 {# show top 10 most frequent entries #}
