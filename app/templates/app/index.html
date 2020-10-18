@@ -32,7 +32,7 @@
         <div class="card-body">
             <div class="card-title">Suggested entries</div>
             {% for name, count in entry_counts.items %}
-                <form method="post" action="{% url 'app:add' name %}" style="display: inline-block;">
+                <form method="post" action="{% url 'app:add_entry_with_date' name form.entry_date.value %}" style="display: inline-block;">
                     {% csrf_token %}
                     <button type="submit" class="btn btn-secondary" name="{{ name }}" style="margin-bottom: 5px;">{{ name }}</button>
                 </form>
