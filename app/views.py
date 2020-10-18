@@ -57,9 +57,9 @@ def index(request):
 @login_required
 def add_entry(request, entry_name, entry_date=datetime.date.today()):
     # only works for post
-    if request.method == 'POST':
-        entry_name = entry_name.strip().lower()
-        entry = Entry.objects.create(name=entry_name, date=entry_date, owner=request.user)
+    # if request.method == 'POST':
+    entry_name = entry_name.strip().lower()
+    entry = Entry.objects.create(name=entry_name, date=entry_date, owner=request.user)
     return HttpResponseRedirect(reverse('app:index'))
 
 
