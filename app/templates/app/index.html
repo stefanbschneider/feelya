@@ -35,7 +35,7 @@
                 <form action="" method="post" style="display: inline-block;">
                     {% csrf_token %}
                     <input type="hidden" name="{{ form.entry_name.html_name }}" value="{{ name }}">
-                    <input type="hidden" class="target-date" name="{{ form.entry_date.html_name }}" value="2020-10-27">
+                    <input type="hidden" class="target-date" name="{{ form.entry_date.html_name }}">
                     <button type="submit" class="btn btn-secondary" style="margin-bottom: 5px;">{{ name }}</button>
                 </form>
             {% endfor %}
@@ -64,10 +64,19 @@
         </div>
     {% endfor %}
 
-{#    script for copying the selected date from the top form to the quick select entries #}
+{#    script for copying the selected date from the top form to the quick select entries on page load and date change #}
     <script>
         var sourceDate = document.getElementById('{{ form.entry_date.id_for_label }}');
         var targetDates = document.getElementsByClassName('target-date');
+
+        // copy on window load the initial value (not sure why it doesn't load the default)
+        window.onload = (event) => {
+            Array.from(targetDates).forEach((target) => {
+                target.value = sourceDate.value;
+            });
+        };
+
+        // and whenever a new date is selected
         sourceDate.addEventListener('change', () => {
             Array.from(targetDates).forEach((target) => {
                 target.value = sourceDate.value;
