@@ -32,9 +32,11 @@
         <div class="card-body">
             <div class="card-title">Suggested entries</div>
             {% for name, count in entry_counts.items %}
-                <form method="post" action="{% url 'app:add_entry_with_date' name form.entry_date.value %}" style="display: inline-block;">
+                <form action="" method="post" style="display: inline-block;">
                     {% csrf_token %}
-                    <button type="submit" class="btn btn-secondary" name="{{ name }}" style="margin-bottom: 5px;">{{ name }}</button>
+                    <input type="hidden" name="{{ form.entry_name.html_name }}" value="{{ name }}">
+                    <input type="hidden" class="target-date" name="{{ form.entry_date.html_name }}" value="2020-10-27">
+                    <button type="submit" class="btn btn-secondary" style="margin-bottom: 5px;">{{ name }}</button>
                 </form>
             {% endfor %}
         </div>
@@ -61,5 +63,16 @@
             </div>
         </div>
     {% endfor %}
+
+{#    script for copying the selected date from the top form to the quick select entries #}
+    <script>
+        var sourceDate = document.getElementById('{{ form.entry_date.id_for_label }}');
+        var targetDates = document.getElementsByClassName('target-date');
+        sourceDate.addEventListener('change', () => {
+            Array.from(targetDates).forEach((target) => {
+                target.value = sourceDate.value;
+            });
+        });
+    </script>
 
 {% endblock %}
