@@ -25,6 +25,7 @@ register_converter(DateConverter, 'yyyymmdd')
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('<yyyymmdd:init_date>/', views.index, name='index_with_date'),
     path('add/<entry_name>/', views.add_entry, name='add'),
     path('add/<entry_name>/<yyyymmdd:entry_date>/', views.add_entry, name='add_entry_with_date'),
     path('delete/<int:pk>/', views.delete_entry, name='delete'),

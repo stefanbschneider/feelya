@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 @login_required
-def index(request):
+def index(request, init_date=datetime.date.today()):
     # if this is a POST request we need to process the form data
     if request.method == 'POST':
         form = EntryForm(request.POST)
@@ -27,10 +27,10 @@ def index(request):
             entry_name = form.cleaned_data['entry_name'].strip().lower()
             entry_date = form.cleaned_data['entry_date']
             entry = Entry.objects.create(name=entry_name, date=entry_date, owner=request.user)
-            return HttpResponseRedirect(reverse('app:index'))
+            return HttpResponseRedirect(reverse('app:index_with_date', args=[entry_date]))
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = EntryForm()
+        form = EntryForm(initial={'entry_date': init_date})
 
     # get relevant data
     entries = Entry.objects.filter(owner=request.user).order_by('-date', 'name')
@@ -57,9 +57,9 @@ def index(request):
 @login_required
 def add_entry(request, entry_name, entry_date=datetime.date.today()):
     # only works for post
-    # if request.method == 'POST':
-    entry_name = entry_name.strip().lower()
-    entry = Entry.objects.create(name=entry_name, date=entry_date, owner=request.user)
+    if request.method == 'POST':
+        entry_name = entry_name.strip().lower()
+        entry = Entry.objects.create(name=entry_name, date=entry_date, owner=request.user)
     return HttpResponseRedirect(reverse('app:index'))
 
 
