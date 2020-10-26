@@ -1,7 +1,7 @@
 import logging
 import datetime
 
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, get_object_or_404
 from django.template import loader
 from django.urls import reverse
@@ -71,6 +71,23 @@ def delete_entry(request, pk):
     else:
         logger.warning(f'delete_query only supports POST requests, got {request.method}')
     return HttpResponseRedirect(reverse('app:index'))
+
+
+def get_all_entries(request, k=5):
+    """Data for bar plot showing the k most common entries and their frequency"""
+    labels = []
+    chart_data = []
+    entry_counts = most_frequent_entries(request.user, number=k)
+    for entry, count in entry_counts.items():
+        labels.append(entry)
+        chart_data.append(count)
+
+    data = {
+        'labels': labels,
+        'chartLabel': 'Num. Entries',
+        'chartData': chart_data
+    }
+    return JsonResponse(data)
 
 
 @login_required
