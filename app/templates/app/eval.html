@@ -36,38 +36,20 @@
                     }]
                 },
                 options: {
-                scales: {
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero: true
-                        }
-                    }]
+                    title: {
+                        text: 'Most Common Entries',
+                        display: true,
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
                 }
-            }
             })
         }
-
-        {#var ctx = document.getElementById('myChart').getContext('2d')#}
-        {#var myBarChart = new Chart(ctx, {#}
-        {#    type: 'bar',#}
-        {#    data: {#}
-        {#        labels: ['Müsli', 'Running', 'Coding'],#}
-        {#        datasets: [{#}
-        {#            label: '# of Entries',#}
-        {#            data: [12, 4, 8],#}
-        {#            borderWidth: 1,#}
-        {#        }]#}
-        {#    },#}
-        {#    options: {#}
-        {#        scales: {#}
-        {#            yAxes: [{#}
-        {#                ticks: {#}
-        {#                    beginAtZero: true#}
-        {#                }#}
-        {#            }]#}
-        {#        }#}
-        {#    }#}
-        {#});#}
     </script>
 
 
