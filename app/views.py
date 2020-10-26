@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Count
 
 from .models import Entry
-from .forms import EntryForm
+from .forms import EntryForm, PlotForm
 from .util import most_frequent_entries
 
 
@@ -91,9 +91,26 @@ def get_all_entries(request, k=5):
 
 
 @login_required
-def evaluate(request):
+def evaluate(request, num_entries=5):
     """Eval view that shows how many times each entry was tracked"""
+    form = PlotForm()
+    # TODO: get the data and add it to context here, rather than via ajax
+    # TODO: then accept arg num_entries to control number of bars. or better get it directly from the form
+
+    labels = []
+    chart_data = []
+    entry_counts = most_frequent_entries(request.user, number=num_entries)
+    for entry, count in entry_counts.items():
+        labels.append(entry)
+        chart_data.append(count)
+
     context = {
-        'entry_counts': most_frequent_entries(request.user)
+        'form': form,
+        'entry_counts': most_frequent_entries(request.user),
+        # for chart.js
+        'labels': labels,
+        'chart_label': 'Num. Entries',
+        'chart_data': chart_data
     }
+
     return render(request, 'app/eval.html', context)
