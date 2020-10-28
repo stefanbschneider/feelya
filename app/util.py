@@ -5,7 +5,11 @@ from django.db.models import Count
 from .models import Entry
 
 
-def most_frequent_entries(user, start_date, end_date=datetime.date.today(), number=None):
+today = datetime.date.today()
+last_year = today - datetime.timedelta(days=365)
+
+
+def most_frequent_entries(user, start_date=last_year, end_date=today, number=None):
     """
     Retrieve and return the most frequent entries for a given user
     :param user: User for which to select the entries

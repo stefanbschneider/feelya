@@ -2,32 +2,12 @@
 
 {% load crispy_forms_tags %}
 
-{# based on https://www.geeksforgeeks.org/data-visualization-using-chartjs-and-django/ #}
 {% block content %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
     <div id="container">
         <canvas id="myChart"></canvas>
     </div>
-
-{#    <form action="" method="post" style="margin-bottom: 1cm;">#}
-{#        {% csrf_token %}#}
-{##}
-{#        <div class="form-group">#}
-{#            {{ form.num_entries.label_tag }}#}
-{#            <input type="number" class="form-control" id="{{ form.num_entries.id_for_label }}" name="{{ form.num_entries.html_name }}" value="{{ form.num_entries.value }}" aria-label="num entries field">#}
-{#            {{ form.start_date }}#}
-{#            {{ form.end_date }}#}
-{#            <div id="{{ form.num_entries.id_for_label }}Feedback" class="invalid-feedback">{{ form.num_entries.errors }}</div>#}
-{#        </div>#}
-{#        <div class="form-group">#}
-{#            {{ form.start_date }}#}
-{#        </div>#}
-{#        <div class="form-group">#}
-{#            {{ form.end_date }}#}
-{#        </div>#}
-{#        <button type="submit" class="btn btn-primary">Submit</button>#}
-{#    </form>#}
 
     <form method="post">
         {% csrf_token %}
@@ -40,6 +20,8 @@
             </div>
         </div>
         {{ form.num_entries|as_crispy_field }}
+
+        {{ form.errors }}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
@@ -77,10 +59,4 @@
             window.myChart = new Chart(ctx, config);
         }
     </script>
-
-{#    <ul>#}
-{#    {% for name, count in entry_counts.items %}#}
-{#        <li>{{ count }}x: {{ name }}</li>#}
-{#    {% endfor %}#}
-{#    </ul>#}
 {% endblock %}
