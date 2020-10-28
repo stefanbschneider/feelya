@@ -93,11 +93,11 @@ def evaluate(request, num_entries=5):
 
     context = {
         'form': form,
-        'entry_counts': most_frequent_entries(request.user),
         # for chart.js
         'labels': labels,
         'chart_label': 'Num. Entries',
-        'chart_data': chart_data
+        'chart_data': chart_data,
+        'chart_title': f'Top {num_entries} Most Common Entries',
     }
 
     return render(request, 'app/eval.html', context)

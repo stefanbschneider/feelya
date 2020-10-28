@@ -1,5 +1,7 @@
 {% extends 'app/base.html' %}
 
+{% load crispy_forms_tags %}
+
 {# based on https://www.geeksforgeeks.org/data-visualization-using-chartjs-and-django/ #}
 {% block content %}
     {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
@@ -8,21 +10,37 @@
         <canvas id="myChart"></canvas>
     </div>
 
-    <form action="" method="post" style="margin-bottom: 1cm;">
+{#    <form action="" method="post" style="margin-bottom: 1cm;">#}
+{#        {% csrf_token %}#}
+{##}
+{#        <div class="form-group">#}
+{#            {{ form.num_entries.label_tag }}#}
+{#            <input type="number" class="form-control" id="{{ form.num_entries.id_for_label }}" name="{{ form.num_entries.html_name }}" value="{{ form.num_entries.value }}" aria-label="num entries field">#}
+{#            {{ form.start_date }}#}
+{#            {{ form.end_date }}#}
+{#            <div id="{{ form.num_entries.id_for_label }}Feedback" class="invalid-feedback">{{ form.num_entries.errors }}</div>#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            {{ form.start_date }}#}
+{#        </div>#}
+{#        <div class="form-group">#}
+{#            {{ form.end_date }}#}
+{#        </div>#}
+{#        <button type="submit" class="btn btn-primary">Submit</button>#}
+{#    </form>#}
+
+    <form method="post">
         {% csrf_token %}
-
-        <div class="form-group">
-            {{ form.num_entries.label_tag }}
-            <div class="input-group">
-                <input type="number" class="form-control" id="{{ form.num_entries.id_for_label }}" name="{{ form.num_entries.html_name }}" value="{{ form.num_entries.value }}" aria-label="num entries field">
-                <div class="input-group-append">
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </div>
+        <div class="row">
+            <div class="col-6">
+                {{ form.start_date|as_crispy_field }}
             </div>
-
-{#            <small id="{{ form.num_entries.id_for_label }}Help" class="form-text text-muted">Number of different entries to display.</small>#}
-            <div id="{{ form.num_entries.id_for_label }}Feedback" class="invalid-feedback">{{ form.num_entries.errors }}</div>
+            <div class="col-6">
+                {{ form.end_date|as_crispy_field }}
+            </div>
         </div>
+        {{ form.num_entries|as_crispy_field }}
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 {#    script for Chart.js bar chart #}
@@ -33,7 +51,7 @@
             data: {
                 labels: {{ labels|safe }},
                 datasets: [{
-                    label: 'Num. Entries',
+                    label: "{{ chart_label|safe }}",
                     data: {{ chart_data|safe }},
                     borderWidth: 1,
                 }]
@@ -41,7 +59,7 @@
             options: {
                 responsive: true,
                 title: {
-                    text: 'Most Common Entries',
+                    text: "{{ chart_title|safe }}",
                     display: true,
                 },
                 scales: {
