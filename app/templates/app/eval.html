@@ -21,7 +21,7 @@
         </div>
         {{ form.num_entries|as_crispy_field }}
 
-        {{ form.errors }}
+        {{ form|as_crispy_errors }}
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
