@@ -2,8 +2,10 @@
 
 {# based on https://www.geeksforgeeks.org/data-visualization-using-chartjs-and-django/ #}
 {% block content %}
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
     <div id="container">
-        <canvas id="myChart" data-url="{% url 'app:eval_data' %}"></canvas>
+        <canvas id="myChart"></canvas>
     </div>
 
     <form action="" method="post" style="margin-bottom: 1cm;">
@@ -12,7 +14,7 @@
         <div class="form-group">
             {{ form.num_entries.label_tag }}
             <div class="input-group">
-                <input type="number" class="form-control" id="{{ form.num_entries.id_for_label }}" name="{{ form.num_entries.html_name }}" aria-label="num entries field">
+                <input type="number" class="form-control" id="{{ form.num_entries.id_for_label }}" name="{{ form.num_entries.html_name }}" value="{{ form.num_entries.value }}" aria-label="num entries field">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </div>
@@ -23,6 +25,7 @@
         </div>
     </form>
 
+{#    script for Chart.js bar chart #}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script>
         var config = {
@@ -57,58 +60,9 @@
         }
     </script>
 
-{#        <script>#}
-{#        var endpoint = '{% url 'app:eval_data' %}';#}
-{##}
-{#        $.ajax({#}
-{#            url: endpoint,#}
-{#            success: function (data) {#}
-{#                plotEntries(data, 'myChart');#}
-{#            },#}
-{#            error: function (error_data) {#}
-{#                console.log(error_data);#}
-{#            }#}
-{#        })#}
-{##}
-{#        function plotEntries(data, id) {#}
-{#            var labels = data.labels;#}
-{#            var chartLabel = data.chartLabel;#}
-{#            var chartData = data.chartData;#}
-{#            var ctx = document.getElementById(id).getContext('2d');#}
-{#            var chart = new Chart(ctx, {#}
-{#                type: 'bar',#}
-{#                data: {#}
-{#                    labels: labels,#}
-{#                    datasets: [{#}
-{#                        label: chartLabel,#}
-{#                        data: chartData,#}
-{#                        borderWidth: 1,#}
-{#                    }]#}
-{#                },#}
-{#                options: {#}
-{#                    title: {#}
-{#                        text: 'Most Common Entries',#}
-{#                        display: true,#}
-{#                    },#}
-{#                    scales: {#}
-{#                        yAxes: [{#}
-{#                            ticks: {#}
-{#                                beginAtZero: true#}
-{#                            }#}
-{#                        }]#}
-{#                    }#}
-{#                }#}
-{#            })#}
-{#        }#}
-{#    </script>#}
-
-
-
-    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-    <ul>
-    {% for name, count in entry_counts.items %}
-        <li>{{ count }}x: {{ name }}</li>
-    {% endfor %}
-    </ul>
+{#    <ul>#}
+{#    {% for name, count in entry_counts.items %}#}
+{#        <li>{{ count }}x: {{ name }}</li>#}
+{#    {% endfor %}#}
+{#    </ul>#}
 {% endblock %}

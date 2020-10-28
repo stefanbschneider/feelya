@@ -73,29 +73,16 @@ def delete_entry(request, pk):
     return HttpResponseRedirect(reverse('app:index'))
 
 
-def get_all_entries(request, k=5):
-    """Data for bar plot showing the k most common entries and their frequency"""
-    labels = []
-    chart_data = []
-    entry_counts = most_frequent_entries(request.user, number=k)
-    for entry, count in entry_counts.items():
-        labels.append(entry)
-        chart_data.append(count)
-
-    data = {
-        'labels': labels,
-        'chartLabel': 'Num. Entries',
-        'chartData': chart_data
-    }
-    return JsonResponse(data)
-
-
 @login_required
 def evaluate(request, num_entries=5):
     """Eval view that shows how many times each entry was tracked"""
-    form = PlotForm()
-    # TODO: get the data and add it to context here, rather than via ajax
-    # TODO: then accept arg num_entries to control number of bars. or better get it directly from the form
+    if request.method == 'POST':
+        form = PlotForm(request.POST)
+
+        if form.is_valid():
+            num_entries = form.cleaned_data['num_entries']
+    else:
+        form = PlotForm(initial={'num_entries': num_entries})
 
     labels = []
     chart_data = []
