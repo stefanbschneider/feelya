@@ -79,7 +79,7 @@ def evaluate(request):
     # default filter
     end_date = datetime.date.today()
     start_date = datetime.date(year=end_date.year, month=end_date.month - 1, day=end_date.day)
-    num_entries=5
+    num_entries = 5
 
     # get custom filter values from form
     if request.method == 'POST':

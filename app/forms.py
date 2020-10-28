@@ -24,7 +24,6 @@ class PlotForm(forms.Form):
         end_date = cleaned_data.get('end_date')
         if start_date > end_date:
             raise forms.ValidationError("Start date must not be before end date.")
-        return start_date
 
     # def clean_start_date(self):
     #     start_date = self.cleaned_data['start_date']
