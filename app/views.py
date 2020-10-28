@@ -111,3 +111,11 @@ def evaluate(request):
     }
 
     return render(request, 'app/eval.html', context)
+
+
+@login_required
+def eval_time_series(request):
+    context = {
+        'dates': [datetime.date.today() + datetime.timedelta(days=i) for i in range(1, 8)]
+    }
+    return render(request, 'app/eval_time_series.html', context)

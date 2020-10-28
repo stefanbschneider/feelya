@@ -30,4 +30,5 @@ urlpatterns = [
     path('add/<entry_name>/<yyyymmdd:entry_date>/', views.add_entry, name='add_entry_with_date'),
     path('delete/<int:pk>/', views.delete_entry, name='delete'),
     path('evaluate/', views.evaluate, name='evaluate'),
+    path('evaluate/time/', views.eval_time_series, name='eval_time_series'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
