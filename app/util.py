@@ -5,14 +5,15 @@ from django.db.models import Count
 from .models import Entry
 
 
-def most_frequent_entries(user, number=None):
+def most_frequent_entries(user, start_date, end_date=datetime.date.today(), number=None):
     """
     Retrieve and return the most frequent entries for a given user
     :param user: User for which to select the entries
     :param number: Max number of entries to return. If None, return all
     :return: Dict: Entry name --> frequency (ordered with most frequent entries first)
     """
-    entry_counts = Entry.objects.filter(owner=user).values('name').annotate(count=Count('name'))
+    entry_counts = Entry.objects.filter(owner=user, date__gte=start_date, date__lte=end_date)\
+        .values('name').annotate(count=Count('name'))
     # sort with decreasing frequency
     counts_sorted = sorted(entry_counts, key=lambda e: e['count'], reverse=True)
     # slice according to given max number

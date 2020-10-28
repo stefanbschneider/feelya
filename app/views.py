@@ -74,19 +74,29 @@ def delete_entry(request, pk):
 
 
 @login_required
-def evaluate(request, num_entries=5):
+def evaluate(request):
     """Eval view that shows how many times each entry was tracked"""
+    # default filter
+    end_date = datetime.date.today()
+    start_date = datetime.date(year=end_date.year, month=end_date.month - 1, day=end_date.day)
+    num_entries=5
+
+    # get custom filter values from form
     if request.method == 'POST':
         form = PlotForm(request.POST)
-
         if form.is_valid():
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
             num_entries = form.cleaned_data['num_entries']
-    else:
-        form = PlotForm(initial={'num_entries': num_entries})
 
+    # or load empty form
+    else:
+        form = PlotForm(initial={'start_date': start_date, 'end_date': end_date, 'num_entries': num_entries})
+
+    # prepare chart data
     labels = []
     chart_data = []
-    entry_counts = most_frequent_entries(request.user, number=num_entries)
+    entry_counts = most_frequent_entries(request.user, start_date, end_date, number=num_entries)
     for entry, count in entry_counts.items():
         labels.append(entry)
         chart_data.append(count)
