@@ -9,21 +9,22 @@
         <canvas id="myChart"></canvas>
     </div>
 
-    {#    script for Chart.js line chart #}
+    {#    script for Chart.js line chart; import Chart.js for plotting, Moment.js to accept dates as strings #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
     <script>
-        {#var labels = [];#}
-        {#{% for d in dates %}#}
-        {#labels.push(new Date("{{ d.isoformat }}"));#}
-        {#{% endfor %}#}
-
         var config = {
             type: 'line',
             data: {
-                labels: [1,2,3,4,5,6,7],
+                labels: {{ dates|safe }},
                 datasets: [{
-                    label: "Number of Entries",
-                    data: [0, 59, 75, 20, 20, 55, 40],
+                    label: "s1",
+                    data: {{ values|safe }}
+                    {#data: [0, 59, 75, 20, 20, 55, 40],#}
+                    {#data: [#}
+                    {#    { x: '2017-01-06 18:39:30', y: 100 },#}
+                    {#    { x: '2017-01-07 18:39:28', y: 101 },#}
+                    {#]#}
                 }]
             },
             options: {
@@ -33,9 +34,9 @@
                     display: true,
                 },
                 scales: {
-                    {#xAxes: [{#}
-                    {#   type: 'time'#}
-                    {#}],#}
+                    xAxes: [{
+                       type: 'time'
+                    }],
                     yAxes: [{
                         ticks: {
                             beginAtZero: true

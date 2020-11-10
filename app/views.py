@@ -10,7 +10,7 @@ from django.db.models import Count
 
 from .models import Entry
 from .forms import EntryForm, PlotForm
-from .util import most_frequent_entries
+from .util import most_frequent_entries, entries_over_time
 
 
 logger = logging.getLogger(__name__)
@@ -115,7 +115,22 @@ def evaluate(request):
 
 @login_required
 def eval_time_series(request):
+    end_date = datetime.date.today()
+    start_date = datetime.date(year=end_date.year, month=end_date.month - 1, day=end_date.day)
+
+    # list of all dates between the specified start and end (incl. both)
+    delta = end_date - start_date
+    str_dates = [str(start_date + datetime.timedelta(days=i)) for i in range(delta.days + 1)]
+
+    # get entries in that time frame as dict of entry names --> list of counts
+    entry_dict = entries_over_time(request.user, start_date, end_date)
+
+    example_list = list(entry_dict.values())[0]
+
+    # TODO: get dict of dates from entries_over_time, pass them to the template and visuailze
+
     context = {
-        'dates': [datetime.date.today() + datetime.timedelta(days=i) for i in range(1, 8)]
+        'dates': str_dates,
+        'values': example_list
     }
     return render(request, 'app/eval_time_series.html', context)

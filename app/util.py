@@ -6,7 +6,38 @@ from .models import Entry
 
 
 today = datetime.date.today()
+last_week = today - datetime.timedelta(weeks=1)
 last_year = today - datetime.timedelta(days=365)
+
+
+def entries_over_time(user, start_date=last_week, end_date=today):
+    """
+    Retrieve and return all entries for a given user over time within a given time frame
+
+    :param user: User for which to get the entries
+    :param start_date: Start date from where to start getting entries
+    :param end_date: End date until when to get entries
+    :return: Dict: Entry name --> list of entry counts per day within the time frame (one element per day)
+    """
+    # list of all dates between the specified start and end (incl. both)
+    delta = end_date - start_date
+    dates = [start_date + datetime.timedelta(days=i) for i in range(delta.days + 1)]
+
+    # get all values for the user in this time frame ordered by increasing date
+    entries = Entry.objects.filter(owner=user, date__gte=start_date, date__lte=end_date).order_by('-date')
+
+    # construct dict with entry name --> list of counts per day
+    entry_dict = dict()
+    for e in entries:
+        # if already in dict, then increment count at the corresponding date
+        if e.name in entry_dict:
+            idx = (e.date - start_date).days
+            entry_dict[e.name][idx] += 1
+        # else initialize with list of zeros for the time frame
+        else:
+            entry_dict[e.name] = [0 for _ in range(len(dates))]
+
+    return entry_dict
 
 
 def most_frequent_entries(user, start_date=last_year, end_date=today, number=None):
