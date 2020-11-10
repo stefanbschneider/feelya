@@ -125,12 +125,8 @@ def eval_time_series(request):
     # get entries in that time frame as dict of entry names --> list of counts
     entry_dict = entries_over_time(request.user, start_date, end_date)
 
-    example_list = list(entry_dict.values())[0]
-
-    # TODO: get dict of dates from entries_over_time, pass them to the template and visuailze
-
     context = {
         'dates': str_dates,
-        'values': example_list
+        'entry_dict': entry_dict
     }
     return render(request, 'app/eval_time_series.html', context)

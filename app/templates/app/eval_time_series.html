@@ -17,15 +17,14 @@
             type: 'line',
             data: {
                 labels: {{ dates|safe }},
-                datasets: [{
-                    label: "s1",
-                    data: {{ values|safe }}
-                    {#data: [0, 59, 75, 20, 20, 55, 40],#}
-                    {#data: [#}
-                    {#    { x: '2017-01-06 18:39:30', y: 100 },#}
-                    {#    { x: '2017-01-07 18:39:28', y: 101 },#}
-                    {#]#}
-                }]
+                datasets: [
+                    {% for entry_name, entry_counts in entry_dict.items %}
+                        {
+                            label: "{{ entry_name|safe }}",
+                            data: {{ entry_counts|safe }}
+                        },
+                    {% endfor %}
+                ]
             },
             options: {
                 responsive: true,
