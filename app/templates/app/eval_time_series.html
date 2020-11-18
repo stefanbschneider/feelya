@@ -44,11 +44,16 @@
                 },
                 scales: {
                     xAxes: [{
-                       type: 'time'
+                       type: 'time',
+                       time: {
+                           unit: 'day'
+                       }
                     }],
                     yAxes: [{
                         ticks: {
-                            beginAtZero: true
+                            beginAtZero: true,
+                            {# only integers, ie, 0 floating point digits #}
+                            precision: 0,
                         }
                     }]
                 }

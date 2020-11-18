@@ -136,5 +136,6 @@ def eval_time_series(request):
         # for iterating
         'num_entries': range(len(entry_dict.keys()))
     }
-    # TODO: make more colorful; only plot dates, never times on x axis; don't plot floating point on y axis; allow selecting which entries to plot in checkboxes
+    # TODO: allow selecting which entries to plot in checkboxes
+    # FIXME: plotted values are wrong! doesn't include values from today!
     return render(request, 'app/eval_time_series.html', context)
