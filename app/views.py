@@ -136,6 +136,5 @@ def eval_time_series(request):
         # for iterating
         'num_entries': range(len(entry_dict.keys()))
     }
-    # TODO: allow selecting which entries to plot in checkboxes (better: use Chart.js options); and time line;
-    # FIXME: plotted values are wrong! doesn't include values from today!
+    # TODO: use same PlotForm from other eval page to select in which time frame to plot and how many different entries
     return render(request, 'app/eval_time_series.html', context)
