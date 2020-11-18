@@ -10,7 +10,7 @@ from django.db.models import Count
 
 from .models import Entry
 from .forms import EntryForm, PlotForm
-from .util import most_frequent_entries, entries_over_time
+from .util import most_frequent_entries, entries_over_time, list_of_colors
 
 
 logger = logging.getLogger(__name__)
@@ -124,10 +124,17 @@ def eval_time_series(request):
 
     # get entries in that time frame as dict of entry names --> list of counts
     entry_dict = entries_over_time(request.user, start_date, end_date)
+    # get corresponding colors
+    colors = list_of_colors(len(entry_dict.keys()))
 
     context = {
         'dates': str_dates,
-        'entry_dict': entry_dict
+        'entry_dict': entry_dict,
+        # 'entry_names': list(entry_dict.keys()),
+        # 'entry_counts': list(entry_dict.values()),
+        # 'colors': colors,
+        # for iterating
+        'num_entries': range(len(entry_dict.keys()))
     }
     # TODO: make more colorful; only plot dates, never times on x axis; don't plot floating point on y axis; allow selecting which entries to plot in checkboxes
     return render(request, 'app/eval_time_series.html', context)

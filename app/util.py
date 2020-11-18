@@ -10,6 +10,17 @@ last_week = today - datetime.timedelta(weeks=1)
 last_year = today - datetime.timedelta(days=365)
 
 
+def list_of_colors(length):
+    """Return a list of colors of the given length"""
+    # list of nice colors: https://coolors.co/f94144-f3722c-f8961e-f9c74f-90be6d-43aa8b-577590
+    base_colors = ['#f94144', '#f3722c', '#f8961e', '#f9c74f', '#90be6d', '#43aa8b', '#577590']
+
+    colors = []
+    for i in range(length):
+        colors.append(base_colors[i % len(base_colors)])
+    return colors
+
+
 def entries_over_time(user, start_date=last_week, end_date=today):
     """
     Retrieve and return all entries for a given user over time within a given time frame
