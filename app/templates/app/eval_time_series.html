@@ -9,6 +9,25 @@
         <canvas id="myChart"></canvas>
     </div>
 
+    <p>Tip: To hide/show a line, tap the corresponding name in the legend above the plot.</p>
+    <p>Use the form below to select a custom range of dates and number of entries to display.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+                {{ form.start_date|as_crispy_field }}
+            </div>
+            <div class="col-6">
+                {{ form.end_date|as_crispy_field }}
+            </div>
+        </div>
+        {{ form.num_entries|as_crispy_field }}
+
+        {{ form|as_crispy_errors }}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
     {#    script for Chart.js line chart; import Chart.js for plotting, Moment.js to accept dates as strings #}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>

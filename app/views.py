@@ -117,24 +117,37 @@ def evaluate(request):
 def eval_time_series(request):
     end_date = datetime.date.today()
     start_date = datetime.date(year=end_date.year, month=end_date.month - 1, day=end_date.day)
+    num_entries = None
+
+    # get custom filter values from form
+    if request.method == 'POST':
+        form = PlotForm(request.POST)
+        if form.is_valid():
+            start_date = form.cleaned_data['start_date']
+            end_date = form.cleaned_data['end_date']
+            num_entries = form.cleaned_data['num_entries']
+
+    # or load empty form
+    else:
+        form = PlotForm(initial={'start_date': start_date, 'end_date': end_date, 'num_entries': num_entries})
 
     # list of all dates between the specified start and end (incl. both)
     delta = end_date - start_date
     str_dates = [str(start_date + datetime.timedelta(days=i)) for i in range(delta.days + 1)]
 
     # get entries in that time frame as dict of entry names --> list of counts
-    entry_dict = entries_over_time(request.user, start_date, end_date)
+    entry_dict = entries_over_time(request.user, start_date, end_date, num_entries)
     # get corresponding colors
     colors = list_of_colors(len(entry_dict.keys()))
 
     context = {
+        'form': form,
         'dates': str_dates,
         'entry_dict': entry_dict,
         # 'entry_names': list(entry_dict.keys()),
         # 'entry_counts': list(entry_dict.values()),
         # 'colors': colors,
         # for iterating
-        'num_entries': range(len(entry_dict.keys()))
+        # 'num_entries': range(len(entry_dict.keys()))
     }
-    # TODO: use same PlotForm from other eval page to select in which time frame to plot and how many different entries
     return render(request, 'app/eval_time_series.html', context)
