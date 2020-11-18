@@ -21,13 +21,14 @@ def list_of_colors(length):
     return colors
 
 
-def entries_over_time(user, start_date=last_week, end_date=today):
+def entries_over_time(user, start_date=last_week, end_date=today, num_entries=None):
     """
     Retrieve and return all entries for a given user over time within a given time frame
 
     :param user: User for which to get the entries
     :param start_date: Start date from where to start getting entries
     :param end_date: End date until when to get entries
+    :param num_entries: How many different kinds of entries to display (starting with the most frequent); all if None
     :return: Dict: Entry name --> list of entry counts per day within the time frame (one element per day)
     """
     # list of all dates between the specified start and end (incl. both)
@@ -37,9 +38,19 @@ def entries_over_time(user, start_date=last_week, end_date=today):
     # get all values for the user in this time frame ordered by increasing date
     entries = Entry.objects.filter(owner=user, date__gte=start_date, date__lte=end_date).order_by('-date')
 
+    # get most frequent entries
+    selected_entries = {}
+    if num_entries is not None:
+        entry_dict = most_frequent_entries(user, start_date, end_date, num_entries)
+        selected_entries = entry_dict.keys()
+
     # construct dict with entry name --> list of counts per day
     entry_dict = dict()
     for e in entries:
+        # skip entries that are not selected; if returning just a limited number of entries
+        if num_entries is not None and e.name not in selected_entries:
+            continue
+
         # initialize with list of zeros for the time frame
         if e.name not in entry_dict:
             entry_dict[e.name] = [0 for _ in range(len(dates))]

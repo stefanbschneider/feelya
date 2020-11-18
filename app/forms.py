@@ -14,7 +14,8 @@ class EntryForm(forms.Form):
 
 
 class PlotForm(forms.Form):
-    num_entries = forms.IntegerField(label='Number of different entries to display', max_value=30, min_value=1)
+    num_entries = forms.IntegerField(label='Number of different entries to display (leave blank to display all)',
+                                     max_value=30, min_value=1, required=False)
     start_date = forms.DateField(initial=last_month, widget=forms.widgets.DateInput(attrs={'type': 'date'}))
     end_date = forms.DateField(initial=datetime.date.today, widget=forms.widgets.DateInput(attrs={'type': 'date'}))
 
