@@ -40,13 +40,12 @@ def entries_over_time(user, start_date=last_week, end_date=today):
     # construct dict with entry name --> list of counts per day
     entry_dict = dict()
     for e in entries:
-        # if already in dict, then increment count at the corresponding date
-        if e.name in entry_dict:
-            idx = (e.date - start_date).days
-            entry_dict[e.name][idx] += 1
-        # else initialize with list of zeros for the time frame
-        else:
+        # initialize with list of zeros for the time frame
+        if e.name not in entry_dict:
             entry_dict[e.name] = [0 for _ in range(len(dates))]
+        # then increment count at the corresponding date
+        idx = (e.date - start_date).days
+        entry_dict[e.name][idx] += 1
 
     return entry_dict
 

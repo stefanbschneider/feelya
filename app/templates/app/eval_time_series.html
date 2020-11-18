@@ -23,7 +23,8 @@
                             label: "{{ entry_name|safe }}",
                             {#random color: https://stackoverflow.com/a/5365036/2745116 #}
                             borderColor: "#"+((1<<24)*Math.random()|0).toString(16),
-                            data: {{ entry_counts|safe }}
+                            data: {{ entry_counts|safe }},
+                            hidden: false,
                         },
                     {% endfor %}
 {#                    {% for i in num_entries %}#}

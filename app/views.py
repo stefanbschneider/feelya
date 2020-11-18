@@ -136,6 +136,6 @@ def eval_time_series(request):
         # for iterating
         'num_entries': range(len(entry_dict.keys()))
     }
-    # TODO: allow selecting which entries to plot in checkboxes
+    # TODO: allow selecting which entries to plot in checkboxes (better: use Chart.js options); and time line;
     # FIXME: plotted values are wrong! doesn't include values from today!
     return render(request, 'app/eval_time_series.html', context)
