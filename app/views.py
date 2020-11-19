@@ -7,10 +7,12 @@ from django.template import loader
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db.models import Count
+from django.core.mail import send_mail, BadHeaderError
 
 from .models import Entry
-from .forms import EntryForm, PlotForm
+from .forms import EntryForm, PlotForm, ContactForm
 from .util import most_frequent_entries, entries_over_time, list_of_colors
+from project.settings import CONTACT_MAIL
 
 
 logger = logging.getLogger(__name__)
@@ -22,6 +24,25 @@ def redirect_landing_page(request):
         return HttpResponseRedirect(reverse('app:index'))
     else:
         return HttpResponseRedirect(reverse('app:about'))
+
+
+# for contact form
+# following https://learndjango.com/tutorials/django-email-contact-form
+def contact_view(request):
+    if request.method == 'GET':
+        form = ContactForm()
+    else:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            subject = "Contact message from FeelYa"
+            from_email = form.cleaned_data['from_email']
+            message = form.cleaned_data['message']
+            try:
+                send_mail(subject, message, from_email, [CONTACT_MAIL])
+            except BadHeaderError:
+                return HttpResponse('Invalid header found.')
+            return HttpResponseRedirect(reverse('app:contact-success'))
+    return render(request, "contact/email.html", {'form': form})
 
 
 @login_required

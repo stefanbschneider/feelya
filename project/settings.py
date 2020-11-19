@@ -195,3 +195,6 @@ PWA_SERVICE_WORKER_PATH = os.path.join(BASE_DIR, 'app', 'serviceworker.js')
 
 # for django-crispy-forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+# for contact form
+CONTACT_MAIL = os.getenv('CONTACT_MAIL')

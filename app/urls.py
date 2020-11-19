@@ -35,4 +35,7 @@ urlpatterns = [
     path('delete/<int:pk>/', views.delete_entry, name='delete'),
     path('evaluate/total/', views.evaluate, name='evaluate'),
     path('evaluate/time/', views.eval_time_series, name='eval_time_series'),
+
+    path('contact/', views.contact_view, name='contact'),
+    path('contact/success/', TemplateView.as_view(template_name='contact/success.html'), name='contact-success'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

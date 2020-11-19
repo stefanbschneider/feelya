@@ -30,6 +30,7 @@ Set the following config vars in Heroku (= env vars):
 * `DJANGO_SECRET_KEY`: `<randomly-generated-secret-key>`
 * `DATABASE_URL`: URL to Heroku Postgres DB
 * `SENDGRID_API_KEY`: `<sendgrid-api-key>`
+* `CONTACT_MAIL`: `<email-address-for-receiving-contact-messages>`
 
 For serving static files (e.g., favicon) in production, Ideally uses `whitenoise`.
 For deployment, also `Procfile` and `runtime.txt` are relevant.

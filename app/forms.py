@@ -32,3 +32,8 @@ class PlotForm(forms.Form):
     #     if start_date > end_date:
     #         raise forms.ValidationError("Start date must not be before end date.")
     #     return start_date
+
+
+class ContactForm(forms.Form):
+    from_email = forms.EmailField(label='Your email address (optional).', required=False)
+    message = forms.CharField(required=True, widget=forms.Textarea)
