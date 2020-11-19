@@ -25,7 +25,6 @@ register_converter(DateConverter, 'yyyymmdd')
 
 
 urlpatterns = [
-    path('', include('pwa.urls')),
     path('', views.redirect_landing_page, name='redirect'),
     path('about/', TemplateView.as_view(template_name='app/about.html'), name='about'),
     path('track/', views.index, name='index'),
