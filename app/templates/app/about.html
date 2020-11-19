@@ -1,0 +1,52 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<div style="text-align: center; margin-bottom: 2cm;">
+    <i class="card-img-top fas fa-seedling fa-10x"></i>
+    <h5>FeelYa: The app that gets you!</h5>
+    <h6>Keep track of what you eat and do and improve how you feel.</h6>
+</div>
+
+{#    Features #}
+<div class="card-group" style="text-align: center;">
+    <div class="card">
+        <i class="card-img-top fas fa-list fa-7x"></i>
+        <div class="card-body">
+            <p class="card-text">
+                Easily log your well-being and relevant activities or food you want to keep track off.
+            </p>
+        </div>
+    </div>
+    <div class="card">
+    <i class="card-img-top far fa-chart-bar fa-7x"></i>
+        <div class="card-body">
+            <p class="card-text">Visualize and analyze your logged entries to gain insights.</p>
+        </div>
+    </div>
+    <div class="card">
+        <i class="card-img-top far fa-smile fa-7x"></i>
+        <div class="card-body">
+            <p class="card-text">Find out what has a positive impact on your life.</p>
+        </div>
+    </div>
+    <div class="card">
+        <i class="card-img-top fab fa-github fa-7x"></i>
+        <div class="card-body">
+            <p class="card-text">
+                Free and <a href="https://github.com/stefanbschneider/feelya" target="_blank">open source</a>.
+            </p>
+        </div>
+    </div>
+</div>
+
+{#    TODO: add recorded gif or video #}
+
+    <div style="text-align: center; margin-top: 1cm;">
+        <p>But: FeelYa is still experimental and there is no warranty whatsoever!</p>
+        <p>To get started, sign up or log in.</p>
+        <a href="{% url 'django_registration_register' %}" class="btn btn-primary">Sign Up</a>
+        <a href="{% url 'login' %}" class="btn btn-primary">Log In</a>
+        <p>Public demo account: "demo"/"publicdemo". Any entered data in the demo account is public!</p>
+    </div>
+
+{% endblock %}

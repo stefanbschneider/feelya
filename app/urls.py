@@ -3,6 +3,7 @@ import datetime
 from django.urls import path, include, re_path, register_converter
 from django.conf import settings
 from django.conf.urls.static import static
+from django.views.generic import TemplateView
 
 from . import views
 
@@ -24,7 +25,11 @@ register_converter(DateConverter, 'yyyymmdd')
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', include('pwa.urls')),
+    path('', views.redirect_landing_page, name='redirect'),
+    path('about/', TemplateView.as_view(template_name='app/about.html'), name='about'),
+    path('track/', views.index, name='index'),
+
     path('<yyyymmdd:init_date>/', views.index, name='index_with_date'),
     path('add/<entry_name>/', views.add_entry, name='add'),
     path('add/<entry_name>/<yyyymmdd:entry_date>/', views.add_entry, name='add_entry_with_date'),

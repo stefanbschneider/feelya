@@ -16,6 +16,14 @@ from .util import most_frequent_entries, entries_over_time, list_of_colors
 logger = logging.getLogger(__name__)
 
 
+# landing page redirects to idea index if logged in and to about otherwise
+def redirect_landing_page(request):
+    if request.user.is_authenticated:
+        return HttpResponseRedirect(reverse('app:index'))
+    else:
+        return HttpResponseRedirect(reverse('app:about'))
+
+
 @login_required
 def index(request, init_date=datetime.date.today()):
     # if this is a POST request we need to process the form data
