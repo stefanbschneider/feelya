@@ -1,6 +1,18 @@
-# feelya
+**Status:** Prototype finished. Bug fixes or minor new features may still be added.
 
-✔️😊 feelya: The app that gets you! Keep track of what you eat and do and improve how you feel. 
+**Live demo:** [Heroku](https://feelya-app.herokuapp.com/)
+
+# FeelYa
+
+✔️😊 FeelYa: The app that gets you! Keep track of what you eat and do and improve how you feel. 
+
+FeelYa is a simple progressive web app (PWA) that helps you keep track of what you do and understand what makes you feel good.
+
+* Simply keep track of whatever is relevant to you: Food, sport, work, other activities - and how you feel.
+* Add the same entry multiple times to indicate a larger quantity, e.g., more food/sport/stress/...
+* Visualize your most common entries within a custom time frame
+* Analyze your entires over time to identify what has a positive impact and what has a negative impact
+* Use anywhere: Responsive design and secured via password
 
 ## Development
 
