@@ -2,7 +2,7 @@
 
 **Status:** Prototype finished. Bug fixes or minor new features may still be added. Contributions or feedback are welcome.
 
-**Live demo:** [Heroku](https://feelya-app.herokuapp.com/)
+**Live demo:** [Heroku](https://feelya-app.herokuapp.com/), **Video walkthrough:** [YouTube](https://youtu.be/ONDT1Y4QbcM)
 
 # FeelYa
 
@@ -15,6 +15,8 @@ FeelYa is a simple progressive web app (PWA) that helps you keep track of what y
 * Visualize your most common entries within a custom time frame
 * Analyze your entires over time to identify what has a positive impact and what has a negative impact
 * Use anywhere: Responsive design and secured via password
+
+<img src="docs/walkthrough.gif" alt="feelya demo" width="50%" />
 
 Technology stack:
 
