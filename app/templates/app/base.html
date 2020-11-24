@@ -56,6 +56,9 @@
                     <a class="nav-link" href="{% url 'app:eval_time_series' %}">Entries Over Time</a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'app:about' %}">About</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}?next={{ request.path }}">Logout ({{ user.get_username }})</a>
                 </li>
                 {% else %}
