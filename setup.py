@@ -8,7 +8,6 @@ requirements = [
     'gunicorn>=20.0.4',
     'dj-database-url>=0.5.0',
     'psycopg2-binary>=2.8.6',
-    # 'freezegun',
     'django-pwa>=1.0.10',
     'whitenoise>=5.2.0',
 ]
@@ -16,9 +15,9 @@ requirements = [
 setup(
     name='feelya',
     author='Stefan Schneider',
-    version=0.1,
-    description="feelya: The app that gets you! Keep track of what you eat and do and improve how you feel.",
-    # url='https://ideally-app.herokuapp.com/',
+    version=1.0,
+    description="FeelYa: The app that gets you! Keep track of what you eat and do and improve how you feel.",
+    url='https://feelya-app.herokuapp.com/',
     find_packages=find_packages(),
     python_requires=">=3.8.*",
     install_requires=requirements,
